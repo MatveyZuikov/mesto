@@ -16,8 +16,8 @@
 
 @media (min-width: 320px) and (max-width:768px) {
   .profile__edit-button {
-    font-size: 27px;
-    line-height: 1.21;
-    margin: 8px auto 14px 0px;
+    width: 18px;
+    height: 18px;
+    margin: 8px 0 0 10px;
   }
 }

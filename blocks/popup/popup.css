@@ -1,0 +1,14 @@
+.popup {
+  display: none;
+}
+
+.popup::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0.5;
+  background: rgba(0, 0, 0);
+}

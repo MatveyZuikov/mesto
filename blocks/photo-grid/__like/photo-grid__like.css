@@ -1,0 +1,19 @@
+.photo-grid__like {
+  background: url(../../../images/like.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  border: 0;
+  width: 22px;
+  height: 19px;
+  margin: 5px 5px 0 0;
+}
+
+.photo-grid__like:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.photo-grid__like:active {
+  background: url(../../../images/like-black.svg);
+}
+
