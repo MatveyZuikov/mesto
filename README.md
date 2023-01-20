@@ -12,7 +12,7 @@
 Возможность добавления новых мест;
 
 ссылка на gh-pages:
-https://matveyzuikov.github.io/russian-travel/
+https://matveyzuikov.github.io/mesto/
 
 
 ссылка на figma :
