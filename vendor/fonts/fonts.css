@@ -11,9 +11,9 @@
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
-  src: url('./Inter-Bold.otf') format('opentype'),
-  url('./Inter-Bold.woff2') format('woff2'),
-  url('./Inter-Bold.woff') format('woff');
+  src: url('./Inter-Medium.otf') format('opentype'),
+  url('./Inter-Medium.woff') format('woff'),
+  url('./Inter-Medium.woff2') format('woff2');
 }
 
 @font-face {
