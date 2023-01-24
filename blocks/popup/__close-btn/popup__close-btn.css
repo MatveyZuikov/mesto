@@ -3,9 +3,9 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  position: relative;
+  position: absolute;
   top: -40px;
-  left: 438px;
+  right: -40px;
   width: 32px;
   height: 32px;
   padding: 0;
@@ -21,7 +21,7 @@
 @media (min-width: 320px) and (max-width: 768px) {
   .popup__close-btn {
     top: -36px;
-    left: 262px;
+    right: 0;
     width: 20px;
     height: 20px;
   }

@@ -14,75 +14,77 @@
     <main class="contect">
       <section class="profile">
         <div class="profile__container">
-          <img class="profile__avatar" src="./images/avatar.jpg" alt="">
+          <img class="profile__avatar" src="./images/avatar.jpg" alt="аватар профиля">
           <div class="profile__info">
             <div class="profile__first-line">
-              <p class="profile__name">Жак-Ив Кусто</p>
-              <button class="profile__edit-button"></button>
+              <h1 class="profile__name">Жак-Ив Кусто</h1>
+              <button class="profile__edit-button" type="button"></button>
             </div>
             <p class="profile__job">Исследователь океана</p>
           </div>
         </div>
-        <button class="profile__add-button"></button>
+        <button class="profile__add-button" type="button"></button>
       </section>
       <section class="photo-grid">
         <div class="photo-grid__element">
           <img class="photo-grid__photo" alt="Карачаевск" src="./images/Karachaevsk.jpg">
           <div class="photo-grid__container">
-            <p class="photo-grid__name">Карачаевск</p>
-            <button class="photo-grid__like" ></button>
+            <h2 class="photo-grid__name">Карачаевск</h2>
+            <button class="photo-grid__like" type="button"></button>
           </div>
         </div>
         <div class="photo-grid__element">
           <img class="photo-grid__photo" alt="гора Эльбрус" src="./images/elbrus.jpg">
           <div class="photo-grid__container">
-            <p class="photo-grid__name">Гора Эльбрус</p>
-            <button class="photo-grid__like"></button>
+            <h2 class="photo-grid__name">Гора Эльбрус</h2>
+            <button class="photo-grid__like" type="button"></button>
           </div>
         </div>
         <div class="photo-grid__element">
           <img class="photo-grid__photo" alt="Домбай" src="./images/dombai.jpg">
           <div class="photo-grid__container">
-            <p class="photo-grid__name">Домбай</p>
-            <button class="photo-grid__like"></button>
+            <h2 class="photo-grid__name">Домбай</h2>
+            <button class="photo-grid__like" type="button"></button>
           </div>
         </div>
         <div class="photo-grid__element">
           <img class="photo-grid__photo" alt="гора Эльбрус" src="./images/elbrus.jpg">
           <div class="photo-grid__container">
-            <p class="photo-grid__name">Гора Эльбрус</p>
-            <button class="photo-grid__like"></button>
+            <h2 class="photo-grid__name">Гора Эльбрус</h2>
+            <button class="photo-grid__like" type="button"></button>
           </div>
         </div>
         <div class="photo-grid__element">
           <img class="photo-grid__photo" alt="Домбай" src="./images/dombai.jpg">
           <div class="photo-grid__container">
-            <p class="photo-grid__name">Домбай</p>
-            <button class="photo-grid__like"></button>
+            <h2 class="photo-grid__name">Домбай</h2>
+            <button class="photo-grid__like" type="button"></button>
           </div>
         </div>
         <div class="photo-grid__element">
           <img class="photo-grid__photo" alt="Карачаевск" src="./images/Karachaevsk.jpg">
           <div class="photo-grid__container">
-            <p class="photo-grid__name">Карачаево-Черкесия</p>
-            <button class="photo-grid__like"></button>
+            <h2 class="photo-grid__name">Карачаево-Черкесия</h2>
+            <button class="photo-grid__like" type="button"></button>
           </div>
         </div>
       </section>
     </main>
     <footer class="footer">
-      <p class="footer__project-name">&#169; 2023 Mesto Russia</p>
+      <p class="footer__project-name">&copy; 2023 Mesto Russia</p>
     </footer>
     <div class="popup">
-      <form class="popup__container">
-        <button class="popup__close-btn"></button>
+      <div class="popup__container">
+        <button class="popup__close-btn" type="button"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <input class="popup__name">
-        <input class="popup__job">
-        <button class="popup__btn" type="submit">Сохранить</button>
-      </form>
+        <form class="popup__form" name="popup__form">
+          <input class="popup__input popup__input-name" type="text" name="popup__name">
+          <input class="popup__input popup__input-job" type="text" name="popup__job">
+          <button class="popup__btn" type="submit">Сохранить</button>
+        </form>
+      </div>
     </div>
-    <script src="./script.js"></script>
   </div>
+  <script src="./vendor/scripts/index.js"></script>
 </body>
 </html>
