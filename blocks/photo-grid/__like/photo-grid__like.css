@@ -12,8 +12,3 @@
   opacity: 0.5;
   cursor: pointer;
 }
-
-.photo-grid__like:active {
-  background: url(../../../images/like-black.svg);
-}
-

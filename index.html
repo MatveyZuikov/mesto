@@ -26,54 +26,12 @@
         <button class="profile__add-button" type="button"></button>
       </section>
       <section class="photo-grid">
-        <div class="photo-grid__element">
-          <img class="photo-grid__photo" alt="Карачаевск" src="./images/Karachaevsk.jpg">
-          <div class="photo-grid__container">
-            <h2 class="photo-grid__name">Карачаевск</h2>
-            <button class="photo-grid__like" type="button"></button>
-          </div>
-        </div>
-        <div class="photo-grid__element">
-          <img class="photo-grid__photo" alt="гора Эльбрус" src="./images/elbrus.jpg">
-          <div class="photo-grid__container">
-            <h2 class="photo-grid__name">Гора Эльбрус</h2>
-            <button class="photo-grid__like" type="button"></button>
-          </div>
-        </div>
-        <div class="photo-grid__element">
-          <img class="photo-grid__photo" alt="Домбай" src="./images/dombai.jpg">
-          <div class="photo-grid__container">
-            <h2 class="photo-grid__name">Домбай</h2>
-            <button class="photo-grid__like" type="button"></button>
-          </div>
-        </div>
-        <div class="photo-grid__element">
-          <img class="photo-grid__photo" alt="гора Эльбрус" src="./images/elbrus.jpg">
-          <div class="photo-grid__container">
-            <h2 class="photo-grid__name">Гора Эльбрус</h2>
-            <button class="photo-grid__like" type="button"></button>
-          </div>
-        </div>
-        <div class="photo-grid__element">
-          <img class="photo-grid__photo" alt="Домбай" src="./images/dombai.jpg">
-          <div class="photo-grid__container">
-            <h2 class="photo-grid__name">Домбай</h2>
-            <button class="photo-grid__like" type="button"></button>
-          </div>
-        </div>
-        <div class="photo-grid__element">
-          <img class="photo-grid__photo" alt="Карачаевск" src="./images/Karachaevsk.jpg">
-          <div class="photo-grid__container">
-            <h2 class="photo-grid__name">Карачаево-Черкесия</h2>
-            <button class="photo-grid__like" type="button"></button>
-          </div>
-        </div>
       </section>
     </main>
     <footer class="footer">
       <p class="footer__project-name">&copy; 2023 Mesto Russia</p>
     </footer>
-    <div class="popup">
+    <div class="popup popup_type_edit-profile">
       <div class="popup__container">
         <button class="popup__close-btn" type="button"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
@@ -84,6 +42,34 @@
         </form>
       </div>
     </div>
+    <div class="popup popup_type_add-card">
+      <div class="popup__container">
+        <button class="popup__close-btn" type="button"></button>
+        <h2 class="popup__title">Новое место</h2>
+        <form class="popup__form" name="popup__form">
+          <input class="popup__input popup__input_title_place" type="text" name="popup__place" placeholder="Название">
+          <input class="popup__input popup__input_title_link" type="text" name="popup__place-link" placeholder="Ссылка на картинку">
+          <button class="popup__btn" type="submit">Создать</button>
+        </form>
+      </div>
+    </div>
+    <div class="popup popup_type_full-photo">
+      <div class="popup__photo">
+        <button class="popup__close-btn" type="button"></button>
+        <img class="popup__card-photo" src="" alt="">
+        <h2 class="popup__photo-title"></h2>
+      </div>
+  </div>
+  <template class="photo-grid__template">
+    <div class="photo-grid__element">
+      <button class="photo-grid__bin" type="button"></button>
+      <img class="photo-grid__photo" src="" alt="">
+      <div class="photo-grid__container">
+        <h2 class="photo-grid__name"></h2>
+        <button class="photo-grid__like" type="button"></button>
+      </div>
+    </div>
+  </template>
   </div>
   <script src="./scripts/index.js"></script>
 </body>

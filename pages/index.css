@@ -30,3 +30,11 @@
 @import url(../blocks/popup/__btn/popup__btn.css);
 @import url(../blocks/popup/__close-btn/popup__close-btn.css);
 @import url(../blocks/popup/__form/popup__form.css);
+@import url(../blocks/popup/__input/_title/_link/popup__input_title_link.css);
+@import url(../blocks/popup/__input/_title/_place/popup__input_title_place.css);
+@import url(../blocks/photo-grid/__like/_active/photo-grid__like_active.css);
+@import url(../blocks/photo-grid/__bin/photo-grid__bin.css);
+@import url(../blocks/popup/_type/_full-photo/popup_type_full-photo.css);
+@import url(../blocks/popup/__photo/popup__photo.css);
+@import url(../blocks/popup/__photo-title/popup__photo-title.css);
+@import url(../blocks/popup/__card-photo/popup__card-photo.css);
