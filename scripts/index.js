@@ -1,88 +1,49 @@
-const addCardPopup = document.querySelector(".popup_type_add-card");
-const editProfilePopup = document.querySelector(".popup_type_edit-profile");
-const fullPhotoPopup = document.querySelector('.popup_type_full-photo');
-const editProfileBtn = document.querySelector(".profile__edit-button");
-const addCardBtn = document.querySelector(".profile__add-button");
+const popupAddCard = document.querySelector(".popup_type_add-card");
+const popupEditProfile = document.querySelector(".popup_type_edit-profile");
+const popupFullPhoto = document.querySelector('.popup_type_full-photo');
+const btnEditProfile = document.querySelector(".profile__edit-button");
+const btnAddCard = document.querySelector(".profile__add-button");
 const profileName = document.querySelector(".profile__name");
 const profileJob = document.querySelector(".profile__job");
 const nameInput = document.querySelector(".popup__input_title_name");
 const jobInput = document.querySelector(".popup__input_title_job");
-const formElement = editProfilePopup.querySelector(".popup__form");
+const formEditProfilePopup = popupEditProfile.querySelector(".popup__form");
 const cardsPlace = document.querySelector('.photo-grid');
 const cardTemplate = document.querySelector('.photo-grid__template').content.querySelector('.photo-grid__element');
 
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
 
-renderCards();
+function createCard(cardData) {
+  const card = cardTemplate.cloneNode(true);
+  const cardName = card.querySelector('.photo-grid__name');
+  const cardPhoto =  card.querySelector('.photo-grid__photo');
 
-function renderCards() {
+  cardName.textContent = cardData.name ;
+  cardPhoto.src = cardData.link;
+  cardPhoto.alt = cardData.name;
 
-
-  initialCards.forEach((item) => {
-    const card = cardTemplate.cloneNode(true);
-    card.querySelector('.photo-grid__name').textContent = item.name;
-    card.querySelector('.photo-grid__photo').src = item.link;
-    card.querySelector('.photo-grid__photo').alt = item.name;
-    cardsPlace.append(card);
-    card.querySelector('.photo-grid__like').addEventListener('click', likeToggle);
-    card.querySelector('.photo-grid__bin').addEventListener('click', removeCard);
-    card.querySelector('.photo-grid__photo').addEventListener('click', () =>{
-      fullPhotoPopup.querySelector('.popup__card-photo').src = card.querySelector('.photo-grid__photo').src;
-      fullPhotoPopup.querySelector('.popup__card-photo').alt = card.querySelector('.photo-grid__photo').alt;
-      fullPhotoPopup.querySelector('.popup__photo-title').textContent = item.name;
-      openPopup(fullPhotoPopup);
-    })
+  card.querySelector('.photo-grid__like').addEventListener('click', likeToggle);
+  card.querySelector('.photo-grid__bin').addEventListener('click', removeCard);
+  cardPhoto.addEventListener('click', () =>{
+  popupFullPhoto.querySelector('.popup__card-photo').src = cardData.link;
+  popupFullPhoto.querySelector('.popup__card-photo').alt = cardData.name;
+  popupFullPhoto.querySelector('.popup__photo-title').textContent = cardData.name;
+  openPopup(popupFullPhoto);
   })
 
-  addCardPopup.querySelector('.popup__form').addEventListener('submit', (evt) =>{
-    evt.preventDefault();
-    const card = cardTemplate.cloneNode(true);
-    const placeInput = document.querySelector('.popup__input_title_place');
-    const linkInput = document.querySelector('.popup__input_title_link');
-    const cardName = card.querySelector('.photo-grid__name');
-    const cardPhoto = card.querySelector('.photo-grid__photo');
-    cardName.textContent = placeInput.value;
-    cardPhoto.alt = placeInput.value;
-    cardPhoto.src = linkInput.value;
 
-    cardsPlace.prepend(card);
-    card.querySelector('.photo-grid__like').addEventListener('click', likeToggle);
-    card.querySelector('.photo-grid__bin').addEventListener('click', removeCard);
-    card.querySelector('.photo-grid__photo').addEventListener('click', () =>{
-      fullPhotoPopup.querySelector('.popup__card-photo').src = card.querySelector('.photo-grid__photo').src;
-      fullPhotoPopup.querySelector('.popup__card-photo').alt = card.querySelector('.photo-grid__photo').alt;
-      fullPhotoPopup.querySelector('.popup__photo-title').textContent = placeInput.value;
-      openPopup(fullPhotoPopup);
-    })
-    closePopup(addCardPopup);
-
-  });
+  return card;
 }
+
+function renderDfltCards(defaultCards) {
+  const cards = defaultCards.map((card) => {
+    return createCard(card);
+  });
+
+  cardsPlace.append(...cards);
+}
+
+renderDfltCards(initialCards);
+
 
 function removeCard(evt) {
   evt.target.parentElement.remove();
@@ -101,14 +62,14 @@ function closePopup(currentPopup) {
   currentPopup.classList.remove('popup_opened');
 }
 
-function openEditProfilePopup() {
+function openPopupEditProfile() {
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
-  openPopup(editProfilePopup);
+  openPopup(popupEditProfile);
 }
 
-function openAddCardPopup() {
-  openPopup(addCardPopup);
+function openPopupAddCard() {
+  openPopup(popupAddCard);
 }
 
 function closeCurrentPopup(currentPopup) {
@@ -119,20 +80,35 @@ function closeCurrentPopup(currentPopup) {
 
 }
 
-closeCurrentPopup(addCardPopup);
-closeCurrentPopup(editProfilePopup);
-closeCurrentPopup(fullPhotoPopup);
+closeCurrentPopup(popupAddCard);
+closeCurrentPopup(popupEditProfile);
+closeCurrentPopup(popupFullPhoto);
 
-function handleFormSubmit (evt) {
+function handleEditProfileFormSubmit (evt) {
     evt.preventDefault();
     profileName.textContent = nameInput.value ;
     profileJob.textContent = jobInput.value ;
-    closePopup(editProfilePopup);
+    closePopup(popupEditProfile);
 
 }
 
-formElement.addEventListener('submit', handleFormSubmit);
-addCardBtn.addEventListener('click', openAddCardPopup);
-editProfileBtn.addEventListener('click', openEditProfilePopup);
+popupAddCard.querySelector('.popup__form').addEventListener('submit', (evt) =>{
+  evt.preventDefault();
+  const placeInput = document.querySelector('.popup__input_title_place');
+  const linkInput = document.querySelector('.popup__input_title_link');
+
+  const cardInfo = {name: placeInput.value, link: linkInput.value }
+
+  const card = createCard(cardInfo);
+
+  cardsPlace.prepend(card);
+  closePopup(popupAddCard);
+  evt.target.reset();
+  });
+
+
+formEditProfilePopup.addEventListener('submit', handleEditProfileFormSubmit);
+btnAddCard.addEventListener('click', openPopupAddCard);
+btnEditProfile.addEventListener('click', openPopupEditProfile);
 
 
