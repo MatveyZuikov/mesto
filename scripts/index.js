@@ -127,7 +127,7 @@ const hasInvalidInput = (inputList) => {
 };
 
 const showInputError = (formElement, inputElement, errorMessage) => {
-  const errorElement = formElement.querySelector(`.error_${inputElement.name}`);
+  const errorElement = formElement.querySelector(`.popup__input-error_title_${inputElement.name}`);
 
   inputElement.classList.add(config.inputErrorClass);
   errorElement.textContent = errorMessage;
@@ -135,7 +135,7 @@ const showInputError = (formElement, inputElement, errorMessage) => {
 };
 
 const hideInputError = (formElement, inputElement) => {
-  const errorElement = formElement.querySelector(`.error_${inputElement.name}`);
+  const errorElement = formElement.querySelector(`.popup__input-error_title_${inputElement.name}`);
 
   inputElement.classList.remove(config.inputErrorClass);
   errorElement.classList.remove(config.errorClass);
