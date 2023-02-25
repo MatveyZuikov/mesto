@@ -58,12 +58,22 @@ function likeToggle(evt) {
   evt.target.classList.toggle("photo-grid__like_active");
 }
 
+const closePopupKeyEscape = (evt) => {
+  if (evt.key === "Escape") {
+    currentPopup = document.querySelector(".popup_opened");
+
+    closePopup(currentPopup);
+  }
+};
+
 function openPopup(currentPopup) {
   currentPopup.classList.add("popup_opened");
+  document.addEventListener("keydown", closePopupKeyEscape);
 }
 
 function closePopup(currentPopup) {
   currentPopup.classList.remove("popup_opened");
+  document.removeEventListener("keydown", closePopupKeyEscape);
 }
 
 function openPopupEditProfile() {
@@ -81,13 +91,13 @@ popups.forEach((popup) => {
     closePopup(popup);
   });
 
-  document.addEventListener("keydown", (evt) => {
-    if (evt.key === "Escape") {
-      closePopup(popup);
-    }
-  });
+  // document.addEventListener("keydown", (evt) => {
+  //   if (evt.key === "Escape") {
+  //     closePopup(popup);
+  //   }
+  // });
 
-  popup.addEventListener("click", (evt) => {
+  popup.addEventListener("mousedown", (evt) => {
     if (evt.target.classList.contains("popup")) closePopup(popup);
   });
 });
@@ -109,72 +119,6 @@ popupAddCard.querySelector(".popup__form").addEventListener("submit", (evt) => {
   closePopup(popupAddCard);
   evt.target.reset();
 });
-
-const toggleButtonState = (inputList, buttonElement) => {
-  if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add(config.inactiveButtonClass);
-    buttonElement.setAttribute("disabled", true);
-  } else {
-    buttonElement.classList.remove(config.inactiveButtonClass);
-    buttonElement.removeAttribute("disabled");
-  }
-};
-
-const hasInvalidInput = (inputList) => {
-  return inputList.some((inputElement) => {
-    return !inputElement.validity.valid;
-  });
-};
-
-const showInputError = (formElement, inputElement, errorMessage) => {
-  const errorElement = formElement.querySelector(`.popup__input-error_title_${inputElement.name}`);
-
-  inputElement.classList.add(config.inputErrorClass);
-  errorElement.textContent = errorMessage;
-  errorElement.classList.add(config.errorClass);
-};
-
-const hideInputError = (formElement, inputElement) => {
-  const errorElement = formElement.querySelector(`.popup__input-error_title_${inputElement.name}`);
-
-  inputElement.classList.remove(config.inputErrorClass);
-  errorElement.classList.remove(config.errorClass);
-  errorElement.textContent = "";
-};
-
-const isValid = (formElement, inputElement) => {
-  if (!inputElement.validity.valid) {
-    showInputError(formElement, inputElement, inputElement.validationMessage);
-  } else {
-    hideInputError(formElement, inputElement);
-  }
-};
-
-const setEventListeners = (formElement) => {
-  const inputList = Array.from(
-    formElement.querySelectorAll(config.inputSelector)
-  );
-
-  const buttonElement = formElement.querySelector(config.submitButtonSelector);
-
-  toggleButtonState(inputList, buttonElement);
-
-  inputList.forEach((inputElement) => {
-    inputElement.addEventListener("input", () => {
-      isValid(formElement, inputElement);
-
-      toggleButtonState(inputList, buttonElement);
-    });
-  });
-};
-
-const enableValidation = (config) => {
-  const formList = Array.from(document.querySelectorAll(config.formSelector));
-
-  formList.forEach((formElement) => {
-    setEventListeners(formElement);
-  });
-};
 
 formEditProfilePopup.addEventListener("submit", handleEditProfileFormSubmit);
 btnAddCard.addEventListener("click", openPopupAddCard);
