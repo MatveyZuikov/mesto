@@ -1,3 +1,7 @@
+import { initialCards } from "./cards.js";
+import { Card } from "./Сard.js";
+import { FormValidator } from "./FormValidator.js";
+
 const popupAddCard = document.querySelector(".popup_type_add-card");
 const popupEditProfile = document.querySelector(".popup_type_edit-profile");
 const popupFullPhoto = document.querySelector(".popup_type_full-photo");
@@ -14,53 +18,24 @@ const popupCardPhoto = popupFullPhoto.querySelector(".popup__card-photo");
 const popupPhotoTitle = popupFullPhoto.querySelector(".popup__photo-title");
 const formEditProfilePopup = popupEditProfile.querySelector(".popup__form");
 const cardsPlace = document.querySelector(".photo-grid");
-const cardTemplate = document
-  .querySelector(".photo-grid__template")
-  .content.querySelector(".photo-grid__element");
 
-function createCard(cardData) {
-  const card = cardTemplate.cloneNode(true);
-  const cardName = card.querySelector(".photo-grid__name");
-  const cardPhoto = card.querySelector(".photo-grid__photo");
-
-  cardName.textContent = cardData.name;
-  cardPhoto.src = cardData.link;
-  cardPhoto.alt = cardData.name;
-
-  card.querySelector(".photo-grid__like").addEventListener("click", likeToggle);
-  card.querySelector(".photo-grid__bin").addEventListener("click", removeCard);
-  cardPhoto.addEventListener("click", () => {
-    popupCardPhoto.src = cardData.link;
-    popupCardPhoto.alt = cardData.name;
-    popupPhotoTitle.textContent = cardData.name;
-    openPopup(popupFullPhoto);
-  });
-
-  return card;
+export function openPhotoPopup(name, link) {
+  popupCardPhoto.src = link;
+  popupCardPhoto.alt = name;
+  popupPhotoTitle.textContent = name;
+  openPopup(popupFullPhoto);
 }
 
-function renderDfltCards(defaultCards) {
-  const cards = defaultCards.map((card) => {
-    return createCard(card);
-  });
+initialCards.forEach((item) => {
+  const card = new Card(item, ".photo-grid__template");
+  const cardElement = card.createCard();
 
-  cardsPlace.append(...cards);
-}
-
-renderDfltCards(initialCards);
-
-function removeCard(evt) {
-  const parentElement = evt.target.closest(".photo-grid__element");
-  parentElement.remove();
-}
-
-function likeToggle(evt) {
-  evt.target.classList.toggle("photo-grid__like_active");
-}
+  cardsPlace.append(cardElement);
+});
 
 const closePopupKeyEscape = (evt) => {
   if (evt.key === "Escape") {
-    currentPopup = document.querySelector(".popup_opened");
+    const currentPopup = document.querySelector(".popup_opened");
 
     closePopup(currentPopup);
   }
@@ -91,12 +66,6 @@ popups.forEach((popup) => {
     closePopup(popup);
   });
 
-  // document.addEventListener("keydown", (evt) => {
-  //   if (evt.key === "Escape") {
-  //     closePopup(popup);
-  //   }
-  // });
-
   popup.addEventListener("mousedown", (evt) => {
     if (evt.target.classList.contains("popup")) closePopup(popup);
   });
@@ -113,7 +82,8 @@ popupAddCard.querySelector(".popup__form").addEventListener("submit", (evt) => {
   evt.preventDefault();
   const cardInfo = { name: placeInput.value, link: linkInput.value };
 
-  const card = createCard(cardInfo);
+  const cardTemplate = new Card(cardInfo, ".photo-grid__template");
+  const card = cardTemplate.createCard();
 
   cardsPlace.prepend(card);
   closePopup(popupAddCard);
@@ -123,3 +93,17 @@ popupAddCard.querySelector(".popup__form").addEventListener("submit", (evt) => {
 formEditProfilePopup.addEventListener("submit", handleEditProfileFormSubmit);
 btnAddCard.addEventListener("click", openPopupAddCard);
 btnEditProfile.addEventListener("click", openPopupEditProfile);
+
+const config = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__btn",
+  inputErrorClass: "popup__input_error_active",
+  errorClass: "popup__input-error",
+  inactiveButtonClass: "popup__btn_disabled",
+};
+
+const profileValidator = new FormValidator(config, popupEditProfile);
+profileValidator.enableValidation();
+const cardAdderValidator = new FormValidator(config, popupAddCard);
+cardAdderValidator.enableValidation();
