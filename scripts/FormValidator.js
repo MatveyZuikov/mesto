@@ -1,27 +1,30 @@
 export class FormValidator {
-  constructor(config, currentPopup) {
+  constructor(config, currentForm) {
     this._config = config;
-    this._currentPopup = currentPopup;
+    this._currentForm = currentForm;
+    this._buttonElement = this._currentForm.querySelector(
+      this._config.submitButtonSelector
+    );
   }
 
-  _toggleButtonState = (inputList, buttonElement) => {
-    if (this._hasInvalidInput(inputList)) {
-      buttonElement.classList.add(this._config.inactiveButtonClass);
-      buttonElement.setAttribute("disabled", true);
+  _toggleButtonState = () => {
+    if (this._hasInvalidInput()) {
+      this._buttonElement.classList.add(this._config.inactiveButtonClass);
+      this._buttonElement.setAttribute("disabled", true);
     } else {
-      buttonElement.classList.remove(this._config.inactiveButtonClass);
-      buttonElement.removeAttribute("disabled");
+      this._buttonElement.classList.remove(this._config.inactiveButtonClass);
+      this._buttonElement.removeAttribute("disabled");
     }
   };
 
-  _hasInvalidInput = (inputList) => {
-    return inputList.some((inputElement) => {
+  _hasInvalidInput = () => {
+    return this._inputList.some((inputElement) => {
       return !inputElement.validity.valid;
     });
   };
 
-  _showInputError = (formElement, inputElement, errorMessage) => {
-    const errorElement = formElement.querySelector(
+  _showInputError = (inputElement, errorMessage) => {
+    const errorElement = this._formElement.querySelector(
       `.popup__input-error_title_${inputElement.name}`
     );
 
@@ -30,8 +33,8 @@ export class FormValidator {
     errorElement.classList.add(this._config.errorClass);
   };
 
-  _hideInputError = (formElement, inputElement) => {
-    const errorElement = formElement.querySelector(
+  _hideInputError = (inputElement) => {
+    const errorElement = this._formElement.querySelector(
       `.popup__input-error_title_${inputElement.name}`
     );
 
@@ -40,47 +43,37 @@ export class FormValidator {
     errorElement.textContent = "";
   };
 
-  _isValid = (formElement, inputElement) => {
+  _isValid = (inputElement) => {
     if (!inputElement.validity.valid) {
-      this._showInputError(
-        formElement,
-        inputElement,
-        inputElement.validationMessage
-      );
+      this._showInputError(inputElement, inputElement.validationMessage);
     } else {
-      this._hideInputError(formElement, inputElement);
+      this._hideInputError(inputElement);
     }
   };
 
-  _setEventListeners(formElement) {
+  _setEventListeners() {
     this._inputList = Array.from(
-      formElement.querySelectorAll(this._config.inputSelector)
+      this._formElement.querySelectorAll(this._config.inputSelector)
     );
 
-    const buttonElement = formElement.querySelector(
-      this._config.submitButtonSelector
-    );
-
-    formElement.addEventListener("reset", () => {
+    this._formElement.addEventListener("reset", () => {
       setTimeout(() => {
-        this._toggleButtonState(this._inputList, buttonElement);
+        this._toggleButtonState();
       }, 0);
     });
 
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
-        this._isValid(formElement, inputElement);
+        this._isValid(inputElement);
 
-        this._toggleButtonState(this._inputList, buttonElement);
+        this._toggleButtonState();
       });
     });
   }
 
   enableValidation() {
-    const formElement = this._currentPopup.querySelector(
-      this._config.formSelector
-    );
+    this._formElement = this._currentForm;
 
-    this._setEventListeners(formElement);
+    this._setEventListeners();
   }
 }

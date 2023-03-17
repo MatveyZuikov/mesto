@@ -1,4 +1,4 @@
-import { initialCards } from "./cards.js";
+import { initialCards, config } from "./constants.js";
 import { Card } from "./Сard.js";
 import { FormValidator } from "./FormValidator.js";
 
@@ -18,6 +18,8 @@ const popupCardPhoto = popupFullPhoto.querySelector(".popup__card-photo");
 const popupPhotoTitle = popupFullPhoto.querySelector(".popup__photo-title");
 const formEditProfilePopup = popupEditProfile.querySelector(".popup__form");
 const cardsPlace = document.querySelector(".photo-grid");
+const formProfile = document.forms.profile;
+const formPlace = document.forms.place;
 
 export function openPhotoPopup(name, link) {
   popupCardPhoto.src = link;
@@ -26,11 +28,13 @@ export function openPhotoPopup(name, link) {
   openPopup(popupFullPhoto);
 }
 
-initialCards.forEach((item) => {
-  const card = new Card(item, ".photo-grid__template");
-  const cardElement = card.createCard();
+function createOneCard(data) {
+  const card = new Card(data, ".photo-grid__template");
+  return card.createCard();
+}
 
-  cardsPlace.append(cardElement);
+initialCards.forEach((cardData) => {
+  cardsPlace.append(createOneCard(cardData));
 });
 
 const closePopupKeyEscape = (evt) => {
@@ -82,10 +86,7 @@ popupAddCard.querySelector(".popup__form").addEventListener("submit", (evt) => {
   evt.preventDefault();
   const cardInfo = { name: placeInput.value, link: linkInput.value };
 
-  const cardTemplate = new Card(cardInfo, ".photo-grid__template");
-  const card = cardTemplate.createCard();
-
-  cardsPlace.prepend(card);
+  cardsPlace.prepend(createOneCard(cardInfo));
   closePopup(popupAddCard);
   evt.target.reset();
 });
@@ -94,16 +95,7 @@ formEditProfilePopup.addEventListener("submit", handleEditProfileFormSubmit);
 btnAddCard.addEventListener("click", openPopupAddCard);
 btnEditProfile.addEventListener("click", openPopupEditProfile);
 
-const config = {
-  formSelector: ".popup__form",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__btn",
-  inputErrorClass: "popup__input_error_active",
-  errorClass: "popup__input-error",
-  inactiveButtonClass: "popup__btn_disabled",
-};
-
-const profileValidator = new FormValidator(config, popupEditProfile);
+const profileValidator = new FormValidator(config, formProfile);
 profileValidator.enableValidation();
-const cardAdderValidator = new FormValidator(config, popupAddCard);
+const cardAdderValidator = new FormValidator(config, formPlace);
 cardAdderValidator.enableValidation();

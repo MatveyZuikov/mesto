@@ -1,9 +1,9 @@
 import { openPhotoPopup } from "./index.js";
 
 export class Card {
-  constructor(initialCards, selector) {
-    this._name = initialCards.name;
-    this._link = initialCards.link;
+  constructor(cardData, selector) {
+    this._name = cardData.name;
+    this._link = cardData.link;
     this._selector = selector;
   }
 
@@ -19,11 +19,12 @@ export class Card {
   createCard() {
     this._card = this._getTempalte();
 
-    const cardPhoto = this._card.querySelector(".photo-grid__photo");
+    this._cardPhoto = this._card.querySelector(".photo-grid__photo");
+    this._cardLikeBtn = this._card.querySelector(".photo-grid__like");
 
     this._card.querySelector(".photo-grid__name").textContent = this._name;
-    cardPhoto.src = this._link;
-    cardPhoto.alt = this._name;
+    this._cardPhoto.src = this._link;
+    this._cardPhoto.alt = this._name;
 
     this._setEventListeners();
 
@@ -31,25 +32,19 @@ export class Card {
   }
 
   _setEventListeners() {
-    this._card
-      .querySelector(".photo-grid__like")
-      .addEventListener("click", () => {
-        this._likeToggle();
-      });
+    this._cardLikeBtn.addEventListener("click", () => {
+      this._toggleLike();
+    });
     this._card
       .querySelector(".photo-grid__bin")
       .addEventListener("click", this._removeCard);
-    this._card
-      .querySelector(".photo-grid__photo")
-      .addEventListener("click", () => {
-        openPhotoPopup(this._name, this._link);
-      });
+    this._cardPhoto.addEventListener("click", () => {
+      openPhotoPopup(this._name, this._link);
+    });
   }
 
-  _likeToggle() {
-    this._card
-      .querySelector(".photo-grid__like")
-      .classList.toggle("photo-grid__like_active");
+  _toggleLike() {
+    this._cardLikeBtn.classList.toggle("photo-grid__like_active");
   }
 
   _removeCard(evt) {
@@ -57,4 +52,3 @@ export class Card {
     parentElement.remove();
   }
 }
-

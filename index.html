@@ -43,6 +43,7 @@
               class="popup__input popup__input_title_name"
               type="text"
               name="name"
+              placeholder="Имя"
               required
               minlength="2"
               maxlength="40"
@@ -54,6 +55,7 @@
               class="popup__input popup__input_title_job"
               type="text"
               name="job"
+              placeholder="О себе"
               required
               minlength="2"
               maxlength="200"
@@ -92,7 +94,7 @@
             <span
               class="popup__input-error popup__input-error_title_link"
             ></span>
-            <button class="popup__btn" type="submit">Создать</button>
+            <button class="popup__btn popup__btn_disabled" type="submit" disabled>Создать</button>
           </form>
         </div>
       </div>
@@ -114,9 +116,6 @@
         </div>
       </template>
     </div>
-    <script src="./scripts/cards.js" type="module"></script>
     <script src="./scripts/index.js" type="module"></script>
-    <script src="./scripts/Сard.js" type="module"></script>
-    <script src="./scripts/FormValidator.js" type="module"></script>
   </body>
 </html>
