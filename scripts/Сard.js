@@ -1,9 +1,9 @@
-import { openPhotoPopup } from "./index.js";
-
 export class Card {
-  constructor(cardData, selector) {
-    this._name = cardData.name;
-    this._link = cardData.link;
+  constructor({ data, handleCardClick }, selector) {
+    this._data = data;
+    this._name = this._data.name;
+    this._link = this._data.link;
+    this._handleCardClick = handleCardClick;
     this._selector = selector;
   }
 
@@ -39,7 +39,7 @@ export class Card {
       .querySelector(".photo-grid__bin")
       .addEventListener("click", this._removeCard);
     this._cardPhoto.addEventListener("click", () => {
-      openPhotoPopup(this._name, this._link);
+      this._handleCardClick(this._data);
     });
   }
 
