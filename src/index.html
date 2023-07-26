@@ -4,19 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mesto</title>
-    <link rel="stylesheet" href="./pages/index.css" />
   </head>
   <body class="body">
     <div class="page">
       <header class="header">
-        <img class="header__logo" src="./images/logo.svg" alt="лого" />
+        <img
+          class="header__logo"
+          src="<%=require('./images/logo.svg')%>"
+          alt="лого"
+        />
       </header>
       <main class="content">
         <section class="profile">
           <div class="profile__container">
             <img
               class="profile__avatar"
-              src="./images/avatar.jpg"
+              src="<%=require('./images/avatar.jpg')%>"
               alt="аватар профиля"
             />
             <div class="profile__info">
@@ -94,7 +97,13 @@
             <span
               class="popup__input-error popup__input-error_title_link"
             ></span>
-            <button class="popup__btn popup__btn_disabled" type="submit" disabled>Создать</button>
+            <button
+              class="popup__btn popup__btn_disabled"
+              type="submit"
+              disabled
+            >
+              Создать
+            </button>
           </form>
         </div>
       </div>

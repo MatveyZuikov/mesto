@@ -6,6 +6,7 @@ import { Popup } from "./Popup.js";
 import { PopupWithImage } from "./PopupWithImage.js";
 import { PopupWithForm } from "./PopupWithForm.js";
 import { UserInfo } from "./UserInfo.js";
+import "../pages/index.css";
 
 const popupAddCard = document.querySelector(".popup_type_add-card");
 const popupEditProfile = document.querySelector(".popup_type_edit-profile");
@@ -19,8 +20,6 @@ const nameInput = document.querySelector(".popup__input_title_name");
 const jobInput = document.querySelector(".popup__input_title_job");
 const placeInput = document.querySelector(".popup__input_title_place");
 const linkInput = document.querySelector(".popup__input_title_link");
-// const popupCardPhoto = popupFullPhoto.querySelector(".popup__card-photo");
-// const popupPhotoTitle = popupFullPhoto.querySelector(".popup__photo-title");
 const formEditProfilePopup = popupEditProfile.querySelector(".popup__form");
 const cardsPlace = document.querySelector(".photo-grid");
 const formProfile = document.forms.profile;
@@ -90,6 +89,9 @@ const profileValidator = new FormValidator(config, formProfile);
 profileValidator.enableValidation();
 const cardAdderValidator = new FormValidator(config, formPlace);
 cardAdderValidator.enableValidation();
+
+
+//старые наработки
 
 // function handleEditProfileFormSubmit(evt) {
 //   evt.preventDefault();
