@@ -1,8 +1,7 @@
-import { initialCards, config } from "./constants.js";
+import { initialCards, config } from "../utils/constants.js";
 import { Card } from "./Сard.js";
 import { FormValidator } from "./FormValidator.js";
 import { Section } from "./Section.js";
-import { Popup } from "./Popup.js";
 import { PopupWithImage } from "./PopupWithImage.js";
 import { PopupWithForm } from "./PopupWithForm.js";
 import { UserInfo } from "./UserInfo.js";
@@ -11,16 +10,10 @@ import "../pages/index.css";
 const popupAddCard = document.querySelector(".popup_type_add-card");
 const popupEditProfile = document.querySelector(".popup_type_edit-profile");
 const popupFullPhoto = document.querySelector(".popup_type_full-photo");
-const popups = Array.from(document.querySelectorAll(".popup"));
 const btnEditProfile = document.querySelector(".profile__edit-button");
 const btnAddCard = document.querySelector(".profile__add-button");
 const profileName = document.querySelector(".profile__name");
 const profileJob = document.querySelector(".profile__job");
-const nameInput = document.querySelector(".popup__input_title_name");
-const jobInput = document.querySelector(".popup__input_title_job");
-const placeInput = document.querySelector(".popup__input_title_place");
-const linkInput = document.querySelector(".popup__input_title_link");
-const formEditProfilePopup = popupEditProfile.querySelector(".popup__form");
 const cardsPlace = document.querySelector(".photo-grid");
 const formProfile = document.forms.profile;
 const formPlace = document.forms.place;
@@ -58,8 +51,8 @@ popupWithImage.setEventListeners();
 const popupNewCard = new PopupWithForm({
   popupSelector: popupAddCard,
   handleFormSubmit: (data) => {
-    const card = createCard(data);
-    cardsPlace.prepend(card);
+    const card = createCard({ name: data.place, link: data.link });
+    cardList.prependItem(card);
   },
 });
 popupNewCard.setEventListeners();
@@ -69,7 +62,6 @@ btnAddCard.addEventListener("click", () => {
 });
 
 const userInfo = new UserInfo(profileName, profileJob);
-const userInputinfo = userInfo.getUserInfo();
 
 const popupEdit = new PopupWithForm({
   popupSelector: popupEditProfile,
@@ -81,15 +73,14 @@ popupEdit.setEventListeners();
 
 btnEditProfile.addEventListener("click", () => {
   popupEdit.open();
-  nameInput.value = userInputinfo.name;
-  jobInput.value = userInputinfo.job;
+  const infoObject = userInfo.getUserInfo();
+  popupEdit.setInputValues(infoObject);
 });
 
 const profileValidator = new FormValidator(config, formProfile);
 profileValidator.enableValidation();
 const cardAdderValidator = new FormValidator(config, formPlace);
 cardAdderValidator.enableValidation();
-
 
 //старые наработки
 
