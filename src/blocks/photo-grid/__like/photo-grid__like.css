@@ -5,7 +5,7 @@
   border: 0;
   width: 22px;
   height: 19px;
-  margin: 5px 5px 0 0;
+  margin-top: -3px;
 }
 
 .photo-grid__like:hover {

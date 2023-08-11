@@ -6,7 +6,11 @@
   object-fit: cover;
 }
 
-@media (min-width: 320px) and (max-width:768px) {
+.profile__avatar:hover {
+  opacity: 20%;
+}
+
+@media (min-width: 320px) and (max-width: 768px) {
   .profile__avatar {
     margin: 0 auto;
   }
