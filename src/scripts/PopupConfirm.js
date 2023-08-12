@@ -5,11 +5,15 @@ export class PopupConfirm extends Popup {
     super(popupSelector);
   }
 
-  setEventListeners(deleteCardFuntion) {
+  confirmProcess(deleteFunction) {
+    this._deleteFunction = deleteFunction;
+  }
+
+  setEventListeners() {
     super.setEventListeners();
     this._popup.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      deleteCardFuntion();
+      this._deleteFunction()
       this.close();
     });
   }

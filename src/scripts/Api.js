@@ -1,26 +1,25 @@
-
-
 export class Api {
   constructor({ url }) {
     this._url = url;
   }
+
+  _getResponseData = (response) => {
+    return response.ok
+      ? response.json()
+      : Promise.reject(`Ошибка: ${response.status}`);
+  };
 
   getInitialCards() {
     return fetch(`${this._url}/cards`, {
       headers: {
         authorization: "0093586c-84ff-45bb-bc45-c3a1b052e50e",
       },
-    }).then((res) => {
-      if (!res.ok) {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-      return res.json();
-    });
+    }).then(this._getResponseData);
   }
 
-  addNewCard({name, link}) {
+  addNewCard({ name, link }) {
     return fetch(`${this._url}/cards`, {
-      method: 'POST',
+      method: "POST",
       headers: {
         authorization: "0093586c-84ff-45bb-bc45-c3a1b052e50e",
         "Content-Type": "application/json",
@@ -29,7 +28,7 @@ export class Api {
         name: name,
         link: link,
       }),
-    })
+    }).then(this._getResponseData);
   }
 
   getUserInfo() {
@@ -37,12 +36,7 @@ export class Api {
       headers: {
         authorization: "0093586c-84ff-45bb-bc45-c3a1b052e50e",
       },
-    }).then((res) => {
-      if (!res.ok) {
-        return Promise.reject(`Ошибка: ${res.status}`);
-      }
-      return res.json();
-    });
+    }).then(this._getResponseData);
   }
 
   changeUserInfo({ name, about }) {
@@ -56,21 +50,19 @@ export class Api {
         name: name,
         about: about,
       }),
-    });
+    }).then(this._getResponseData);
   }
 
-  deleteCard ({id}){
+  deleteCard(id) {
     return fetch(`${this._url}/cards/${id}`, {
       method: "DELETE",
       headers: {
         authorization: "0093586c-84ff-45bb-bc45-c3a1b052e50e",
       },
-    })
+    }).then(this._getResponseData);
   }
 
   // likeCard ({id} ) {
 
   // }
-
-
 }

@@ -1,13 +1,15 @@
-import { PopupConfirm } from "./PopupConfirm";
-import { popupDeleteCard } from "./index.js";
 export class Card {
-  constructor({ data, handleCardClick }, selector, userId) {
+  constructor({ data, handleCardClick, popupDeleteWork }, selector, userId) {
     this._data = data;
     this._place = this._data.place;
     this._name = this._data.name;
     this._link = this._data.link;
     this._handleCardClick = handleCardClick;
+    this._popupDeleteWork = popupDeleteWork;
     this._selector = selector;
+    this._userId = userId;
+    this._owner = this._data.owner._id;
+    this._cardId = this._data._id;
   }
 
   _getTempalte() {
@@ -35,8 +37,8 @@ export class Card {
     } else {
       this._cardAmount.textContent = 0;
     }
-    if (this._data.owner._id != "02a3616c287d0a23f26e4f9f") {
-      this._card.querySelector(".photo-grid__bin").remove();
+    if (this._userId != this._owner) {
+      this._bin.remove();
     }
 
     this._setEventListeners();
@@ -45,14 +47,8 @@ export class Card {
   }
 
   _setEventListeners() {
-    const Popup = new PopupConfirm(popupDeleteCard);
-
-    if (this._card.querySelector(".photo-grid__bin") !== null) {
-    }
-
     this._bin.addEventListener("click", () => {
-      Popup.open();
-      Popup.setEventListeners(this._removeCard);
+      this._popupDeleteWork(this._cardId, this);
     });
 
     this._cardLikeBtn.addEventListener("click", () => {
@@ -67,7 +63,7 @@ export class Card {
     this._cardLikeBtn.classList.toggle("photo-grid__like_active");
   }
 
-  _removeCard() {
+  removeCard() {
     this._card.remove();
     this._card = null;
   }

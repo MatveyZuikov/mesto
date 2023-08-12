@@ -10,7 +10,6 @@ import { UserInfo } from "./UserInfo.js";
 import { Api } from "./Api.js";
 import "../pages/index.css";
 import { data } from "autoprefixer";
-export { popupDeleteCard };
 
 const popupAddCard = document.querySelector(".popup_type_add-card");
 const popupEditProfile = document.querySelector(".popup_type_edit-profile");
@@ -29,46 +28,48 @@ const formProfile = document.forms.profile;
 const formPlace = document.forms.place;
 const avaratBtn = document.querySelector(".profile__avatar-btn");
 
+const popupConfirm = new PopupConfirm(popupDeleteCard);
+popupConfirm.setEventListeners();
+
+function popupDeleteWork(cardId, card) {
+  popupConfirm.open();
+  popupConfirm.confirmProcess(() => {
+    api
+      .deleteCard(cardId)
+      .then(card.removeCard())
+      .catch((err) => {
+        console.error(err);
+      });
+  });
+}
+
 const api = new Api({
   url: "https://mesto.nomoreparties.co/v1/cohort-72",
 });
 
-api.getInitialCards().then((cards) => {
-  cardList.renderItems(cards);
-});
-
-function setProfileInfo() {
-  api.getUserInfo().then((data) => {
-    profileName.textContent = data.name;
-    profileJob.textContent = data.about;
-    profilePhoto.src = data.avatar;
-  });
-}
-
-setProfileInfo();
-
 const cardList = new Section(
   {
-    renderer: (item) => {
-      const card = createCard(item);
+    renderer: (item, id) => {
+      const card = createCard(item, id);
       cardList.addItem(card);
     },
   },
   cardsPlace
 );
 
-const createCard = (item) => {
+const createCard = (item, id) => {
   const card = new Card(
     {
       data: item,
       handleCardClick: (data) => {
         popupWithImage.open(data);
       },
+      popupDeleteWork,
     },
-    ".photo-grid__template"
+    ".photo-grid__template",
+    id
   );
   const cardElement = card.createCard();
-  const bin = cardElement.querySelector(".photo-grid__bin");
 
   return cardElement;
 };
@@ -98,10 +99,14 @@ const popupNewCard = new PopupWithForm({
   popupSelector: popupAddCard,
   handleFormSubmit: (data) => {
     const card = createCard({ name: data.place, link: data.link });
-    api.addNewCard({ name: data.place, link: data.link }).catch((err) => {
-      console.error(err);
-    });
-    cardList.prependItem(card);
+    api
+      .addNewCard({ name: data.place, link: data.link })
+      .then((data) => {
+        cardList.prependItem(card);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   },
 });
 popupNewCard.setEventListeners();
@@ -110,12 +115,12 @@ btnAddCard.addEventListener("click", () => {
   popupNewCard.open();
 });
 
-const userInfo = new UserInfo(profileName, profileJob);
+const userInfo = new UserInfo(profileName, profileJob, profilePhoto);
 
 const popupEdit = new PopupWithForm({
   popupSelector: popupEditProfile,
   handleFormSubmit: (data) => {
-    userInfo.setUserInfo(data);
+    userInfo.setUserInfo({ name: data.name, job: data.job });
     api.changeUserInfo({ name: data.name, about: data.job }).catch((err) => {
       console.error(err);
     });
@@ -133,6 +138,17 @@ const profileValidator = new FormValidator(config, formProfile);
 profileValidator.enableValidation();
 const cardAdderValidator = new FormValidator(config, formPlace);
 cardAdderValidator.enableValidation();
+
+Promise.all([api.getUserInfo(), api.getInitialCards()]).then((data) => {
+  userInfo.setUserInfo({
+    name: data[0].name,
+    job: data[0].about,
+  });
+  userInfo.setAvatarPhoto(data[0].avatar);
+  console.log(data[1]);
+
+  cardList.renderItems(data[1], data[0]._id);
+});
 
 //старые наработки
 
