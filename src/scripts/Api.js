@@ -62,7 +62,34 @@ export class Api {
     }).then(this._getResponseData);
   }
 
-  // likeCard ({id} ) {
+  likeCard(id) {
+    return fetch(`${this._url}/cards/${id}/likes`, {
+      method: "PUT",
+      headers: {
+        authorization: "0093586c-84ff-45bb-bc45-c3a1b052e50e",
+      },
+    }).then(this._getResponseData);
+  }
 
-  // }
+  dislikeCard(id) {
+    return fetch(`${this._url}/cards/${id}/likes`, {
+      method: "DELETE",
+      headers: {
+        authorization: "0093586c-84ff-45bb-bc45-c3a1b052e50e",
+      },
+    }).then(this._getResponseData);
+  }
+
+  changeUserAvatar(avatar) {
+    return fetch(`${this._url}/users/me/${avatar}`, {
+      method: "PATCH",
+      headers: {
+        authorization: "0093586c-84ff-45bb-bc45-c3a1b052e50e",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        avatar,
+      }),
+    }).then(this._getResponseData);
+  }
 }

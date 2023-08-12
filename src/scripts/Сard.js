@@ -1,15 +1,22 @@
 export class Card {
-  constructor({ data, handleCardClick, popupDeleteWork }, selector, userId) {
+  constructor(
+    { data, handleCardClick, popupDeleteWork, handleLikeClick },
+    selector,
+    userId
+  ) {
     this._data = data;
     this._place = this._data.place;
     this._name = this._data.name;
     this._link = this._data.link;
     this._handleCardClick = handleCardClick;
     this._popupDeleteWork = popupDeleteWork;
+    this._handleLikeClick = handleLikeClick;
     this._selector = selector;
     this._userId = userId;
-    this._owner = this._data.owner._id;
+    this._owner = data.owner._id;
     this._cardId = this._data._id;
+    this._likes = this._data.likes;
+    this._isLiked = this._data.likes.some((like) => userId === like._id);
   }
 
   _getTempalte() {
@@ -32,14 +39,11 @@ export class Card {
     this._card.querySelector(".photo-grid__name").textContent = this._name;
     this._cardPhoto.src = this._link;
     this._cardPhoto.alt = this._name;
-    if ("likes" in this._data) {
-      this._cardAmount.textContent = this._data.likes.length;
-    } else {
-      this._cardAmount.textContent = 0;
-    }
     if (this._userId != this._owner) {
       this._bin.remove();
     }
+
+    this.setLikeNumber(this._likes);
 
     this._setEventListeners();
 
@@ -52,15 +56,21 @@ export class Card {
     });
 
     this._cardLikeBtn.addEventListener("click", () => {
-      this._toggleLike();
+      this._handleLikeClick(this._cardId, this._isLiked, this);
     });
     this._cardPhoto.addEventListener("click", () => {
       this._handleCardClick(this._data);
     });
   }
 
-  _toggleLike() {
-    this._cardLikeBtn.classList.toggle("photo-grid__like_active");
+  setLikeNumber(number) {
+    this._likes = number;
+    this._cardAmount.textContent = number.length;
+    if (this._isLiked) {
+      this._cardLikeBtn.classList.add("photo-grid__like_active");
+    } else {
+      this._cardLikeBtn.classList.remove("photo-grid__like_active");
+    }
   }
 
   removeCard() {
