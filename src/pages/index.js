@@ -1,13 +1,13 @@
 import { initialCards, config } from "../utils/constants.js";
-import { Card } from "./Сard.js";
-import { FormValidator } from "./FormValidator.js";
-import { Section } from "./Section.js";
-import { Popup } from "./Popup.js";
-import { PopupConfirm } from "./PopupConfirm.js";
-import { PopupWithImage } from "./PopupWithImage.js";
-import { PopupWithForm } from "./PopupWithForm.js";
-import { UserInfo } from "./UserInfo.js";
-import { Api } from "./Api.js";
+import { Card } from "../components/Сard.js";
+import { FormValidator } from "../components/FormValidator.js";
+import { Section } from "../components/Section.js";
+import { Popup } from "../components/Popup.js";
+import { PopupConfirm } from "../components/PopupConfirm.js";
+import { PopupWithImage } from "../components/PopupWithImage.js";
+import { PopupWithForm } from "../components/PopupWithForm.js";
+import { UserInfo } from "../components/UserInfo.js";
+import { Api } from "../components/Api.js";
 import "../pages/index.css";
 import { data } from "autoprefixer";
 
