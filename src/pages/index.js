@@ -53,7 +53,7 @@ function handleLikeClick(id, isLiked, card) {
       .likeCard(id)
       .then((data) => {
         card.setLikeNumber(data.likes);
-        // card.likeCard();
+        card.likeCard();
       })
       .catch((err) => {
         console.error(err);
@@ -63,7 +63,7 @@ function handleLikeClick(id, isLiked, card) {
       .dislikeCard(id)
       .then((data) => {
         card.setLikeNumber(data.likes);
-        // card.dislikeCard;
+        card.dislikeCard();
       })
       .catch((err) => {
         console.error(err);

@@ -16,9 +16,9 @@ export class Card {
     this._owner = data.owner._id;
     this._cardId = this._data._id;
     this._likes = this._data.likes;
-    this._isLiked = this._likes.some((like) => {
-      return userId === like._id;
-    });
+    // this._isLiked = this._likes.some((like) => {
+    //   return userId === like._id;
+    // });
   }
 
   _getTempalte() {
@@ -49,11 +49,29 @@ export class Card {
     //   this._cardLikeBtn.classList.add("photo-grid__like_active");
     // }
 
+    // this._cardAmount.textContent = this._likes.length;
+
     this.setLikeNumber(this._likes);
 
     this._setEventListeners();
 
     return this._card;
+  }
+
+  checkLikeStatus() {
+    return this._likes.some((like) => {
+      return like._id === this._userId;
+    });
+  }
+
+  setLikeNumber(likes) {
+    this._cardAmount.textContent = likes.length;
+    this._likes = likes;
+    if (this.checkLikeStatus()) {
+      this.likeCard();
+    } else {
+      this.dislikeCard();
+    }
   }
 
   _setEventListeners() {
@@ -62,7 +80,7 @@ export class Card {
     });
 
     this._cardLikeBtn.addEventListener("click", () => {
-      this._handleLikeClick(this._cardId, this._isLiked, this);
+      this._handleLikeClick(this._cardId, this.checkLikeStatus(), this);
     });
     this._cardPhoto.addEventListener("click", () => {
       this._handleCardClick(this._data);
@@ -75,17 +93,6 @@ export class Card {
 
   dislikeCard() {
     this._cardLikeBtn.classList.remove("photo-grid__like_active");
-  }
-
-  setLikeNumber(likes) {
-    if (this._isLiked) {
-      this.likeCard();
-      // this._cardLikeBtn.classList.add("photo-grid__like_active");
-    } else {
-      this.dislikeCard();
-      // this._cardLikeBtn.classList.remove("photo-grid__like_active");
-    }
-    this._cardAmount.textContent = likes.length;
   }
 
   removeCard() {
