@@ -1,6 +1,7 @@
 export class Api {
-  constructor({ url }) {
+  constructor({ url, token }) {
     this._url = url;
+    this._token = token;
   }
 
   _getResponseData = (response) => {
@@ -12,7 +13,7 @@ export class Api {
   getInitialCards() {
     return fetch(`${this._url}/cards`, {
       headers: {
-        authorization: "0093586c-84ff-45bb-bc45-c3a1b052e50e",
+        authorization: this._token,
       },
     }).then(this._getResponseData);
   }
@@ -21,7 +22,7 @@ export class Api {
     return fetch(`${this._url}/cards`, {
       method: "POST",
       headers: {
-        authorization: "0093586c-84ff-45bb-bc45-c3a1b052e50e",
+        authorization: this._token,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -34,7 +35,7 @@ export class Api {
   getUserInfo() {
     return fetch(`${this._url}/users/me`, {
       headers: {
-        authorization: "0093586c-84ff-45bb-bc45-c3a1b052e50e",
+        authorization: this._token,
       },
     }).then(this._getResponseData);
   }
@@ -43,7 +44,7 @@ export class Api {
     return fetch(`${this._url}/users/me`, {
       method: "PATCH",
       headers: {
-        authorization: "0093586c-84ff-45bb-bc45-c3a1b052e50e",
+        authorization: this._token,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -57,7 +58,7 @@ export class Api {
     return fetch(`${this._url}/cards/${id}`, {
       method: "DELETE",
       headers: {
-        authorization: "0093586c-84ff-45bb-bc45-c3a1b052e50e",
+        authorization: this._token,
       },
     }).then(this._getResponseData);
   }
@@ -66,7 +67,7 @@ export class Api {
     return fetch(`${this._url}/cards/${id}/likes`, {
       method: "PUT",
       headers: {
-        authorization: "0093586c-84ff-45bb-bc45-c3a1b052e50e",
+        authorization: this._token,
       },
     }).then(this._getResponseData);
   }
@@ -75,16 +76,16 @@ export class Api {
     return fetch(`${this._url}/cards/${id}/likes`, {
       method: "DELETE",
       headers: {
-        authorization: "0093586c-84ff-45bb-bc45-c3a1b052e50e",
+        authorization: this._token,
       },
     }).then(this._getResponseData);
   }
 
   changeUserAvatar(avatar) {
-    return fetch(`${this._url}/users/me/${avatar}`, {
+    return fetch(`${this._url}/users/me/avatar`, {
       method: "PATCH",
       headers: {
-        authorization: "0093586c-84ff-45bb-bc45-c3a1b052e50e",
+        authorization: this._token,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
